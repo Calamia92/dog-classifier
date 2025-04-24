@@ -1,0 +1,13 @@
+# requirements.txt — dépendances production/runtime
+numpy==1.25.0
+pandas==2.0.3
+tensorflow==2.13.0
+torch==1.13.1            # pour CPU ; pour GPU : torch==1.13.1+cu117 et torchvision==0.14.1+cu117
+scikit-learn==1.2.2
+matplotlib==3.7.1
+Pillow==9.5.0
+opencv-python==4.7.0.72
+albumentations==1.4.0
+fastapi==0.95.0
+uvicorn==0.22.0
+python-dotenv==1.0.0

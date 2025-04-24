@@ -1,0 +1,22 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environnement virtuel
+venv/
+.env
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Données brutes et traitées
+data/raw/
+data/processed/
+
+# Logs
+*.log
+
+# Fichiers système
+.DS_Store
+.idea/
