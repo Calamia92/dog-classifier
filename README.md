@@ -102,7 +102,16 @@ papermill>=2.5       # exécution de notebooks en CI
 pytest>=7.1          # tests unitaires
 flake8>=4.0
 azure-devops>=7.1.0  # interactions avec Azure Pipelines
+ipykernel            # pour exécuter les notebooks avec papermill
 ```
+
+**Remarque :**  
+Pour exécuter les notebooks avec papermill, il faut aussi installer le kernel Jupyter dans votre environnement virtuel :
+```bash
+pip install ipykernel
+python -m ipykernel install --user --name=python3
+```
+
 ## Usage
 
 Avant tout, installez pillow si nécessaire :
@@ -164,5 +173,4 @@ pytest --maxfail=1 -q
 Ce projet est sous licence MIT.
 
 ---
-````
 

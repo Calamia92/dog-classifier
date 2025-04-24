@@ -1,0 +1,36 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.12'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '$(pythonVersion)'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt -r dev-requirements.txt
+      pip install flake8 papermill
+    displayName: 'Installer les dépendances'
+
+  - script: |
+      python -m flake8 scripts/ --max-line-length=120
+    displayName: 'Linting Python (flake8)'
+
+  - script: |
+      python -m papermill notebooks/eda.ipynb output/eda-out.ipynb
+      python -m papermill notebooks/cnn_scratch.ipynb output/cnn_scratch-out.ipynb
+      python -m papermill notebooks/transfer_learning.ipynb output/transfer_learning-out.ipynb
+    displayName: 'Exécution des notebooks (papermill)'
+
+  - task: AzureWebApp@1
+    inputs:
+      azureSubscription: 'Azure for Students'
+      appName: 'gh'
+      package: '$(System.DefaultWorkingDirectory)'
+    displayName: 'Déploiement sur Azure Web App'

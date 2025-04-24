@@ -18,6 +18,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
+
 def preprocess_images(input_dir, output_dir, image_size, crop_type):
     total = 0
     # Parcours récursif de tous les dossiers de classes et sous-classes
@@ -39,7 +40,8 @@ def preprocess_images(input_dir, output_dir, image_size, crop_type):
                     w, h = img.size
                     m = min(w, h)
                     if crop_type == 'center':
-                        left = (w - m)//2; top = (h - m)//2
+                        left = (w - m) // 2
+                        top = (h - m) // 2
                     else:
                         left = random.randint(0, w - m)
                         top = random.randint(0, h - m)
@@ -60,18 +62,27 @@ def preprocess_images(input_dir, output_dir, image_size, crop_type):
             logging.info(f"{count} images traitées dans '{rel_path}'")
     logging.info(f"Total images traitées : {total}")
 
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Prétraitement des images de chiens")
-    parser.add_argument('--input_dir',  required=True, help="Répertoire source ou .tar")
+    parser.add_argument('--input_dir', required=True, help="Répertoire source ou .tar")
     parser.add_argument('--output_dir', required=True, help="Répertoire de sortie")
     parser.add_argument('--image_size', type=int, default=224, help="Taille carrée des images")
-    parser.add_argument('--crop_type', choices=['none','center','random'], default='none',
-                        help="Type de crop avant resize")
+    parser.add_argument(
+        '--crop_type',
+        choices=['none', 'center', 'random'],
+        default='none',
+        help="Type de crop avant resize"
+    )
     return parser.parse_args()
+
 
 def main():
     args = parse_args()
-    logging.info(f"Prétraitement: input={args.input_dir}, output={args.output_dir}, size={args.image_size}, crop={args.crop_type}")
+    logging.info(
+        f"Prétraitement: input={args.input_dir}, output={args.output_dir}, "
+        f"size={args.image_size}, crop={args.crop_type}"
+    )
     if not os.path.exists(args.input_dir):
         logging.error("Répertoire d'entrée introuvable : %s", args.input_dir)
         sys.exit(1)
@@ -108,6 +119,7 @@ def main():
     if temp_dir:
         shutil.rmtree(temp_dir)
     logging.info("Prétraitement terminé")
+
 
 if __name__ == '__main__':
     main()
