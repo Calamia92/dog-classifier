@@ -46,9 +46,20 @@ This repository contains code and resources for classifying dog breeds using bot
    source venv/bin/activate  # ou `venv\\Scripts\\activate` sous Windows
    ```
 3. **Installer les dépendances**
-   ```bash
-   pip install -r requirements.txt
-   ```
+   Pour avoir tous les outils nécessaires, installez :
+   - **Production** (libs pour exécution du code et modèles) :
+     ```bash
+     pip install -r requirements.txt
+     ```
+   - **Développement** (tests, linting, CI/CD) :
+     ```bash
+     pip install -r dev-requirements.txt
+     ```
+
+*Vous pouvez installer les deux si vous comptez contribuer au projet :*
+```bash
+pip install -r requirements.txt -r dev-requirements.txt
+```
 
 ## Dependencies
 
