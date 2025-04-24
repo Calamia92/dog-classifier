@@ -60,6 +60,17 @@ This repository contains code and resources for classifying dog breeds using bot
 ```bash
 pip install -r requirements.txt -r dev-requirements.txt
 ```
+### Deep Learning & Data
+
+Le projet s'appuie principalement sur les bibliothèques suivantes pour le traitement d'images, l'entraînement de modèles de Deep Learning et l'exploration des données :
+
+- **TensorFlow + Keras** : Framework de Deep Learning choisi pour sa simplicité, sa documentation riche et son intégration avec des modèles pré-entraînés via `keras.applications`. Il permet à la fois de construire un CNN from scratch et de faire du transfert learning (VGG16, MobileNet, etc.).
+- **NumPy / Pandas** : Pour la manipulation de données, les statistiques de base, le traitement de chemins de fichiers, et la gestion des labels.
+- **Matplotlib / Seaborn** : Pour les visualisations exploratoires (distribution des classes, exemples d’images, courbes de loss/accuracy, etc.).
+- **Pillow (PIL) / OpenCV** : Chargement, redimensionnement et manipulation des images (prétraitement de base).
+- **Albumentations** : Utilisé pour la data augmentation avancée (rotations, flips, jitter, etc.), très rapide et flexible comparé aux outils intégrés de Keras.
+
+Ces choix technologiques permettent une bonne balance entre performance, facilité d’implémentation, et lisibilité du code pour un projet pédagogique ou associatif.
 
 ## Dependencies
 
