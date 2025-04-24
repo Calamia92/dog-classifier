@@ -94,10 +94,36 @@ azure-devops>=7.1.0  # interactions avec Azure Pipelines
 ```
 ## Usage
 
-### 1. Prétraitement des images
+Avant tout, installez pillow si nécessaire :
 ```bash
-python scripts/preprocess.py --input_dir data/raw --output_dir data/processed --size 224 --crop centered
+pip install pillow
 ```
+
+### 1. Prétraitement des images
+
+Pour lancer le prétraitement et extraire/traiter les images depuis votre archive :
+
+```bash
+python scripts/preprocess.py \
+  --input_dir data/raw \
+  --output_dir data/processed \
+  --image_size 224 \
+  --crop_type center
+```
+
+Après exécution, vos images redimensionnées se trouvent dans le dossier de sortie, typiquement :
+
+Linux/macOS:
+```bash
+ls data/processed/Images/
+```
+
+Windows PowerShell:
+```powershell
+dir data\processed\Images\
+```
+
+Note : « Images » est le nom du dossier extrait depuis votre archive `images.tar`.  
 
 ### 2. Entraînement
 
@@ -116,9 +142,16 @@ python scripts/train.py --approach transfer --model vgg16 --data_dir data/proces
 python scripts/infer.py --model_path models/best_model.h5 --image_path path/to/image.jpg
 ```
 
+## Tests
+Pour lancer les tests unitaires :
+```bash
+pytest --maxfail=1 -q
+```
+
 ## Licence
 
 Ce projet est sous licence MIT.
 
 ---
+````
 
