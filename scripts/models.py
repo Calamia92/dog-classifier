@@ -4,7 +4,7 @@ from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import layers, models
 
-def build_cnn_scratch(train_generator, val_generator):
+def build_cnn_scratch(train_generator):
     # --- Définition du modèle CNN ---
     model = models.Sequential()
 
@@ -33,13 +33,6 @@ def build_cnn_scratch(train_generator, val_generator):
     model.compile(optimizer='adam',
                 loss='categorical_crossentropy',
                 metrics=['accuracy'])
-
-    # --- Callback pour la sauvegarde du meilleur modèle ---
-    checkpoint_callback = ModelCheckpoint('best_model.h5', 
-                                        save_best_only=True, 
-                                        monitor='val_loss', 
-                                        mode='min', 
-                                        verbose=1)
     return model
 
 def build_transfer_model(input_shape, num_classes):
