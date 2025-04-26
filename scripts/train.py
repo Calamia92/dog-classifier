@@ -6,7 +6,6 @@ from models import build_cnn_scratch, build_transfer_model
 from scipy.io import loadmat
 import pandas as pd
 from tensorflow.keras.utils import to_categorical
-
 # --- Args ---
 parser = argparse.ArgumentParser()
 parser.add_argument('--model', choices=['scratch', 'transfer'], required=True)
@@ -63,10 +62,16 @@ if args.custom_aug:
         processed_images_dir=args.data_dir
     )
 
-    val_gen = load_and_augment_images(
-        val_list, val_labels_cat, args.batch_size,
+    # Générateur sans augmentation pour la validation
+    val_datagen = ImageDataGenerator(rescale=1./255)
+    val_gen = val_datagen.flow_from_dataframe(
+        dataframe=val_df,
+        x_col='filename',
+        y_col='class',
         target_size=(args.img_size, args.img_size),
-        processed_images_dir=args.data_dir
+        batch_size=args.batch_size,
+        class_mode='categorical',
+        shuffle=False
     )
 
     print("🖼️ Un exemple d'image augmentée va s'ouvrir")
@@ -130,4 +135,7 @@ model.fit(
 
 print(f"✅ Modèle sauvegardé dans {args.output}")
 print("✅ Entraînement terminé.")
+# Évaluation
+test_loss, test_acc = model.evaluate(val_gen, steps=len(val_gen))
+print(f"✅ Test Accuracy: {test_acc:.4f} - Test Loss: {test_loss:.4f}")
 print("📦 Modèle prêt à être utilisé pour la prédiction ou l'évaluation.")

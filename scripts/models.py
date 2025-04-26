@@ -4,7 +4,7 @@ from tensorflow.keras.applications import MobileNetV2, VGG16, MobileNet
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import layers, models
 
-def build_cnn_scratch(train_generator):
+def build_cnn_scratch(num_classes):
     # --- Définition du modèle CNN ---
     model = models.Sequential()
 
@@ -27,7 +27,7 @@ def build_cnn_scratch(train_generator):
     model.add(layers.Dense(128, activation='relu'))
 
     # Couche de sortie
-    model.add(layers.Dense(train_generator, activation='softmax'))  # Nombre de classes
+    model.add(layers.Dense(num_classes, activation='softmax'))  # Nombre de classes
 
     # --- Compilation du modèle ---
     model.compile(optimizer='adam',
