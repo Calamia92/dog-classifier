@@ -124,11 +124,7 @@ pip install pillow
 Pour lancer le prétraitement et extraire/traiter les images depuis votre archive :
 
 ```bash
-python scripts/preprocess.py \
-  --input_dir data/raw \
-  --output_dir data/processed \
-  --image_size 224 \
-  --crop_type center
+python scripts/preprocess.py --input_dir data/raw --output_dir data/processed --image_size 224 --crop_type center
 ```
 
 Après exécution, vos images redimensionnées se trouvent dans le dossier de sortie, typiquement :
