@@ -1,6 +1,6 @@
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense, Dropout, GlobalAveragePooling2D
-from tensorflow.keras.applications import MobileNetV2
+from tensorflow.keras.applications import MobileNetV2, VGG16, MobileNet
 from tensorflow.keras.callbacks import ModelCheckpoint
 from tensorflow.keras import layers, models
 
@@ -35,13 +35,25 @@ def build_cnn_scratch(train_generator):
                 metrics=['accuracy'])
     return model
 
-def build_transfer_model(input_shape, num_classes):
-    base_model = MobileNetV2(weights='imagenet', include_top=False, input_shape=input_shape)
+def build_transfer_model(base_model_name, input_shape, num_classes):
+    if base_model_name == "vgg16":
+        base_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape)
+    elif base_model_name == "mobilenet":
+        base_model = MobileNet(weights="imagenet", include_top=False, input_shape=input_shape)
+    else:
+        raise ValueError("Unsupported base model. Choose 'vgg16' or 'mobilenet'.")
+
+    # Freeze convolutional layers
     base_model.trainable = False
+
+    # Add custom head
     model = Sequential([
         base_model,
         GlobalAveragePooling2D(),
         Dropout(0.3),
-        Dense(num_classes, activation='softmax')
+        Dense(256, activation="relu"),
+        Dropout(0.3),
+        Dense(num_classes, activation="softmax")
     ])
+
     return model
