@@ -158,6 +158,37 @@ python scripts/train.py --approach transfer --model vgg16 --data_dir data/proces
 python scripts/infer.py --model_path models/best_model.h5 --image_path path/to/image.jpg
 ```
 
+## API REST
+
+### Endpoint `/predict`
+
+- **Méthode** : POST
+- **Description** : Envoie une image pour obtenir les 3 meilleures prédictions.
+- **Exemple de réponse** :
+  ```json
+  {
+    "predictions": [
+      {"class": "Labrador", "score": 0.85},
+      {"class": "Golden Retriever", "score": 0.10},
+      {"class": "Beagle", "score": 0.05}
+    ]
+  }
+  ```
+
+### Lancer l'API
+
+```bash
+uvicorn webapp.backend.app:app --reload
+```
+
+### Tests Unitaires
+
+Pour exécuter les tests unitaires :
+
+```bash
+pytest scripts/test_app.py
+```
+
 ## Tests
 Pour lancer les tests unitaires :
 ```bash

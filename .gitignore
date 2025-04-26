@@ -22,3 +22,7 @@ data/processed/
 .DS_Store
 .idea/
 models/best_model.h5
+
+
+# Fichiers de test d'image
+tests/sample_image.jpg
