@@ -4,3 +4,4 @@ papermill==2.6.0
 pytest==7.4.0
 flake8==6.0.0
 azure-devops==7.1.0b4
+fastapi[test]==0.95.0

@@ -21,3 +21,6 @@ data/processed/
 # Fichiers système
 .DS_Store
 .idea/
+
+# Fichiers de test d'image
+tests/sample_image.jpg
