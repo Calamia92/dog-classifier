@@ -106,7 +106,10 @@ input_shape = (args.img_size, args.img_size, 3)
 if args.model == 'scratch':
     model = build_cnn_scratch(num_classes)
 else:
-    model = build_transfer_model(input_shape, num_classes)
+    model = build_transfer_model("vgg16", input_shape, num_classes)  # Changez "vgg16" par "mobilenet" si nécessaire
+
+# Afficher le résumé du modèle
+model.summary()
 
 model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accuracy'])
 
@@ -126,3 +129,5 @@ model.fit(
 )
 
 print(f"✅ Modèle sauvegardé dans {args.output}")
+print("✅ Entraînement terminé.")
+print("📦 Modèle prêt à être utilisé pour la prédiction ou l'évaluation.")
