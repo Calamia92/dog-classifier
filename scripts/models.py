@@ -35,7 +35,7 @@ def build_cnn_scratch(num_classes):
                 metrics=['accuracy'])
     return model
 
-def build_transfer_model(base_model_name, input_shape, num_classes):
+def build_transfer_model(base_model_name, input_shape, num_classes, unfreeze_layers=0):
     if base_model_name == "vgg16":
         base_model = VGG16(weights="imagenet", include_top=False, input_shape=input_shape)
     elif base_model_name == "mobilenet":
@@ -43,8 +43,13 @@ def build_transfer_model(base_model_name, input_shape, num_classes):
     else:
         raise ValueError("Unsupported base model. Choose 'vgg16' or 'mobilenet'.")
 
-    # Freeze convolutional layers
+    # Freeze all layers initially
     base_model.trainable = False
+
+    # Unfreeze the top N layers
+    if unfreeze_layers > 0:
+        for layer in base_model.layers[-unfreeze_layers:]:
+            layer.trainable = True
 
     # Add custom head
     model = Sequential([
