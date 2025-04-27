@@ -1,203 +1,173 @@
-# Dog Breed Classification with Deep Learning
+# 🐶 Dog Breed Classification with Deep Learning
 
-This repository contains code and resources for classifying dog breeds using both a custom CNN and transfer learning.
+Projet de classification de races de chiens utilisant un CNN from scratch et du Transfer Learning.
 
-## Collaborators
+## 👨‍💻 Collaborateurs
 
 - **Bouba** (Lead Developer & Data Preprocessing)
 - **Théo** (Model Architect & Experimentation)
 - **Hicham** (DevOps & Web Integration)
 
+---
 
-## Project Structure
+## 📂 Structure du projet
+
 ```
 ├── data/
-│   ├── raw/                # Images brutes téléchargées
-│   └── processed/          # Images redimensionnées et augmentées
-├── notebooks/              # Notebooks d'exploration et d'expérimentation
-│   ├── eda.ipynb           # Analyse exploratoire des données
-│   ├── cnn_scratch.ipynb   # Modèle CNN from scratch
-│   └── transfer_learning.ipynb  # Transfer learning
-├── scripts/                # Scripts Python réutilisables
-│   ├── preprocess.py       # Redimensionnement, cropping, augmentation
-│   ├── train.py            # Entraînement (scratch / transfer)
-│   └── infer.py            # Inférence Top 3 classes
-├── webapp/                 # Application Web pour démo
-│   ├── backend/            # API Flask/FastAPI
-│   └── frontend/           # HTML/CSS/JS
+│   ├── processed/          # Images redimensionnées
+│   └── raw/                # Images brutes originales (.mat inclus)
+├── models/                 # Modèles entraînés (.h5 CNN et Transfer Learning)
+├── notebooks/              # Notebooks Jupyter (EDA, Modèles)
+│   ├── cnn_scratch.ipynb
+│   ├── transfer_learning.ipynb
+│   ├── eda_images.ipynb
+│   └── eda_classes.ipynb
 ├── presentation/           # Slides de présentation
-├── azure-pipelines.yml     # CI/CD Azure DevOps
-├── Dockerfile
-├── docker-compose.yml
-├── requirements.txt
-└── README.md
+├── scripts/                # Scripts Python (processing, training, augmentation)
+│   ├── augmentation_data.py
+│   ├── download_data.py
+│   ├── infer.py
+│   ├── models.py
+│   ├── preprocess.py
+│   ├── test_app.py
+│   └── train.py
+├── webapp/
+│   ├── backend/
+│   │   └── app.py          # FastAPI backend
+│   └── frontend/
+│       └── frontend_app.py # Streamlit frontend
+├── requirements.txt        # Dépendances principales
+└── README.md               # Ce fichier
 ```
 
-## Installation
+---
 
-1. **Cloner le dépôt**
-   ```bash
-   git clone https://github.com/Calamia92/dog-classifier.git
-   cd dog-classifier
-   ```
-2. **Créer et activer un environnement virtuel**
-   ```bash
-   python3 -m venv venv
-   source venv/bin/activate  # ou `venv\\Scripts\\activate` sous Windows
-   ```
-3. **Installer les dépendances**
-   Pour avoir tous les outils nécessaires, installez :
-   - **Production** (libs pour exécution du code et modèles) :
-     ```bash
-     pip install -r requirements.txt
-     ```
-   - **Développement** (tests, linting, CI/CD) :
-     ```bash
-     pip install -r dev-requirements.txt
-     ```
+## ⚙️ Installation
 
-*Vous pouvez installer les deux si vous comptez contribuer au projet :*
+1. **Cloner le dépôt :**
 ```bash
-pip install -r requirements.txt -r dev-requirements.txt
-```
-### Deep Learning & Data
-
-Le projet s'appuie principalement sur les bibliothèques suivantes pour le traitement d'images, l'entraînement de modèles de Deep Learning et l'exploration des données :
-
-- **TensorFlow + Keras** : Framework de Deep Learning choisi pour sa simplicité, sa documentation riche et son intégration avec des modèles pré-entraînés via `keras.applications`. Il permet à la fois de construire un CNN from scratch et de faire du transfert learning (VGG16, MobileNet, etc.).
-- **NumPy / Pandas** : Pour la manipulation de données, les statistiques de base, le traitement de chemins de fichiers, et la gestion des labels.
-- **Matplotlib / Seaborn** : Pour les visualisations exploratoires (distribution des classes, exemples d’images, courbes de loss/accuracy, etc.).
-- **Pillow (PIL) / OpenCV** : Chargement, redimensionnement et manipulation des images (prétraitement de base).
-- **Albumentations** : Utilisé pour la data augmentation avancée (rotations, flips, jitter, etc.), très rapide et flexible comparé aux outils intégrés de Keras.
-
-Ces choix technologiques permettent une bonne balance entre performance, facilité d’implémentation, et lisibilité du code pour un projet pédagogique ou associatif.
-
-## Dependencies
-
-Dans le fichier `requirements.txt` et `dev-requirements.txt`, on liste les principales librairies Python nécessaires :
-
-requirements
-```text
-numpy>=1.21
-pandas>=1.3
-tensorflow>=2.10
-keras>=2.10
-torch>=1.13          # si vous choisissez PyTorch pour partie du projet
-scikit-learn>=1.0
-matplotlib>=3.5
-Pillow>=9.2
-opencv-python>=4.6
-albumentations>=1.3  # pour la data augmentation avancée
-flask>=2.1           # pour l’API Web (ou FastAPI)
-fastapi>=0.85
-uvicorn>=0.18        # serveur ASGI pour FastAPI
-python-dotenv>=0.21  # gestion des variables d’environnement
+git clone https://github.com/Calamia92/dog-classifier.git
+cd dog-classifier
 ```
 
-dev-requirements
-```text
-# Outils de dev et CI/CD
-jupyter>=1.0
-papermill>=2.5       # exécution de notebooks en CI
-pytest>=7.1          # tests unitaires
-flake8>=4.0
-azure-devops>=7.1.0  # interactions avec Azure Pipelines
-ipykernel            # pour exécuter les notebooks avec papermill
-```
-
-**Remarque :**  
-Pour exécuter les notebooks avec papermill, il faut aussi installer le kernel Jupyter dans votre environnement virtuel :
+2. **Créer et activer un environnement virtuel :**
 ```bash
-pip install ipykernel
-python -m ipykernel install --user --name=python3
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# Mac/Linux
+source .venv/bin/activate
 ```
 
-## Usage
-
-Avant tout, installez pillow si nécessaire :
+3. **Installer les dépendances :**
 ```bash
-pip install pillow
+pip install -r requirements.txt
 ```
+
+---
+
+## 🧠 Deep Learning & Traitement d'images
+
+Technos principales utilisées :
+- TensorFlow / Keras
+- NumPy / Pandas
+- Matplotlib
+- Pillow (PIL)
+- Albumentations
+- OpenCV
+- FastAPI
+- Streamlit
+
+---
+
+## 🚀 Usage
 
 ### 1. Prétraitement des images
-
-Pour lancer le prétraitement et extraire/traiter les images depuis votre archive :
-
 ```bash
-python scripts/preprocess.py --input_dir data/raw --output_dir data/processed --image_size 224 --crop_type center
+python scripts/preprocess.py --input_dir data/raw --output_dir data/processed --image_size 224
 ```
 
-Après exécution, vos images redimensionnées se trouvent dans le dossier de sortie, typiquement :
+---
 
-Linux/macOS:
+### 2. Entraînement du modèle
+
+**a. CNN from scratch**
 ```bash
-ls data/processed/Images/
+python scripts/train.py --model scratch --batch_size 32 --epochs 10
 ```
 
-Windows PowerShell:
-```powershell
-dir data\processed\Images\
-```
-
-Note : « Images » est le nom du dossier extrait depuis votre archive `images.tar`.  
-
-### 2. Entraînement
-
-#### a. CNN from scratch
+**b. Transfer Learning (VGG16)**
 ```bash
-python scripts/train.py --approach scratch --data_dir data/processed --epochs 10 --batch_size 32
+python scripts/train.py --model transfer --batch_size 32 --epochs 10
 ```
 
-#### b. Transfer Learning
-```bash
-python scripts/train.py --approach transfer --model vgg16 --data_dir data/processed --epochs 5 --batch_size 32
-```
+---
 
-### 3. Inférence
-```bash
-python scripts/infer.py --model_path models/best_model.h5 --image_path path/to/image.jpg
-```
+## 🌐 Lancement de l'application Web
 
-## API REST
-
-### Endpoint `/predict`
-
-- **Méthode** : POST
-- **Description** : Envoie une image pour obtenir les 3 meilleures prédictions.
-- **Exemple de réponse** :
-  ```json
-  {
-    "predictions": [
-      {"class": "Labrador", "score": 0.85},
-      {"class": "Golden Retriever", "score": 0.10},
-      {"class": "Beagle", "score": 0.05}
-    ]
-  }
-  ```
-
-### Lancer l'API
-
+### 1. Lancer le Backend FastAPI
+Depuis la racine :
 ```bash
 uvicorn webapp.backend.app:app --reload
 ```
+Backend disponible sur : http://localhost:8000
 
-### Tests Unitaires
+### 2. Lancer le Frontend Streamlit
+Depuis la racine :
+```bash
+streamlit run webapp/frontend/frontend_app.py
+```
+Frontend disponible sur : http://localhost:8501
 
-Pour exécuter les tests unitaires :
+---
 
+## 📚 API Documentation
+
+- **GET /** → Test serveur (Hello World)
+- **POST /predict** → Envoyer une image et obtenir les 3 meilleures prédictions
+
+Exemple réponse JSON :
+```json
+{
+  "predictions": [
+    {"class": "Labrador_retriever", "score": 0.85},
+    {"class": "Golden_retriever", "score": 0.10},
+    {"class": "Beagle", "score": 0.05}
+  ]
+}
+```
+
+---
+
+## ✅ Tests
+
+Pour lancer les tests unitaires :
 ```bash
 pytest scripts/test_app.py
 ```
 
-## Tests
-Pour lancer les tests unitaires :
-```bash
-pytest --maxfail=1 -q
+---
+
+## 📦 Dépendances principales (`requirements.txt`)
+
+```text
+numpy
+pandas
+tensorflow
+keras
+scikit-learn
+matplotlib
+Pillow
+opencv-python
+albumentations
+fastapi
+uvicorn
+streamlit
+python-multipart
 ```
-
-## Licence
-
-Ce projet est sous licence MIT.
 
 ---
 
+## 📝 Licence
+
+Projet sous licence **MIT**.

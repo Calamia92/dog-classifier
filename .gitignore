@@ -26,3 +26,5 @@ models/best_model.h5
 
 # Fichiers de test d'image
 tests/sample_image.jpg
+models/best_transfer_model.h5
+models/final_transfer_model.h5
